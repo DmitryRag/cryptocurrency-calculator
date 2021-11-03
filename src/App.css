@@ -1,0 +1,120 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.calculator__container {
+  display: flex;
+  flex-direction: column;
+  padding: 25px;
+	border: 1px solid #ccc;
+	border-radius: 5px;
+	width: 300px;
+}
+
+body {
+	text-align: center;
+	padding: 10px;
+}
+
+.calculator__field {
+  display: flex;
+  flex-direction: column;
+	margin-bottom: 10px;
+}
+
+.calculator__field-date {
+  display: flex;
+	margin-bottom: 10px;
+}
+
+.cruptocurrency__name:required:invalid {
+  color: gray;
+  background-color: rgba(239, 239, 239, 0.3);
+}
+
+.cruptocurrency__currency-name {
+  outline: none;
+	display: block;
+	width: 100%;
+	border-radius: 2px;
+	border: 1px solid #ccc;
+	padding: 10px;
+	box-sizing: border-box;
+}
+/* 3123123123123123 */
+.cruptocurrency__currency-name:disabled:required {
+  color: gray;
+  background-color: rgba(239, 239, 239, 0.3);
+  opacity: 100;
+}
+.cruptocurrency__name-option {
+  color: #ccc;
+}
+
+.cruptocurrency__input {
+	outline: none;
+	display: block;
+	width: 100%;
+	border-radius: 2px;
+	border: 1px solid #ccc;
+	padding: 10px;
+	box-sizing: border-box;
+  margin-right: 5px;
+}
+
+.cruptocurrency__name {
+  outline: none;
+	display: block;
+	width: 100%;
+	border-radius: 2px;
+	border: 1px solid #ccc;
+	padding: 10px;
+	box-sizing: border-box;
+}
+
+.btn__calculator {
+	width: 50%;
+	padding: 10px;
+	border-radius: 2px;
+	border: 0;
+	background-color: gray;
+	color: #fff;
+}
+
+.btn__calculator_big {
+  width: 300px;
+  margin-top: 5px;
+}
+
+.btn__calculator_currency {
+  width: 100px;
+  border-radius: 2px;
+	border: 0;
+  height: 25px;
+  margin: 0 7.5px 5px 7.5px;
+  background-color: gray;
+	color: #fff;
+}
+
+.btn_disabled {
+  background-color: #ccc;
+	color: #fff;
+}
+
+
+
+/* input:valid:not(:placeholder-shown) {
+	border-color: green;
+} */
+
+input:invalid:not(:placeholder-shown) {
+	border-color: firebrick;
+}
+
+.error__date-buy {
+  color: firebrick;
+  font-size: 13px;
+  margin-bottom: 10px;
+}
