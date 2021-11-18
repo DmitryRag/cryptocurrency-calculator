@@ -43,7 +43,7 @@ body {
 	padding: 10px;
 	box-sizing: border-box;
 }
-/* 3123123123123123 */
+
 .cruptocurrency__currency-name:disabled:required {
   color: gray;
   background-color: rgba(239, 239, 239, 0.3);
@@ -61,7 +61,6 @@ body {
 	border: 1px solid #ccc;
 	padding: 10px;
 	box-sizing: border-box;
-  margin-right: 5px;
 }
 
 .cruptocurrency__name {
@@ -81,10 +80,16 @@ body {
 	border: 0;
 	background-color: gray;
 	color: #fff;
+  margin-left: 5px;
 }
 
 .btn__calculator_big {
   width: 300px;
+  padding: 10px;
+	border-radius: 2px;
+	border: 0;
+	background-color: gray;
+	color: #fff;
   margin-top: 5px;
 }
 
@@ -103,18 +108,12 @@ body {
 	color: #fff;
 }
 
-
-
-/* input:valid:not(:placeholder-shown) {
-	border-color: green;
-} */
-
 input:invalid:not(:placeholder-shown) {
 	border-color: firebrick;
 }
 
 .error__date-buy {
   color: firebrick;
-  font-size: 13px;
-  margin-bottom: 10px;
+  font-size: 10px;
+  margin-bottom: 18px;
 }
