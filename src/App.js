@@ -34,7 +34,6 @@ function App() {
 
     const disabledButtonTotal = !coinNameValidity || !dateBuyValidity || !dateSellValidity || !moneyBuyValidity // профит кнопка
 
-
     var cryptocurrency = coinName.toLowerCase().replace( /\s/g, '-')
 
     var buyday
@@ -214,6 +213,7 @@ function App() {
 
     function handleProfit(e) {
         e.preventDefault()
+
         var money = Number(moneyBuy.replace(/[^0-9]/g,""))
         if (currencyChoice === 'rub') {
             setProfit((money / coinBuyRub) * coinSellRub)
