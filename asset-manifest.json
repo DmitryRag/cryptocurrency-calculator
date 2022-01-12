@@ -1,20 +1,20 @@
 {
   "files": {
-    "main.css": "/cryptocurrency-calculator/static/css/main.1091640e.chunk.css",
-    "main.js": "/cryptocurrency-calculator/static/js/main.edbae504.chunk.js",
-    "main.js.map": "/cryptocurrency-calculator/static/js/main.edbae504.chunk.js.map",
+    "main.css": "/cryptocurrency-calculator/static/css/main.6032d930.chunk.css",
+    "main.js": "/cryptocurrency-calculator/static/js/main.480c9383.chunk.js",
+    "main.js.map": "/cryptocurrency-calculator/static/js/main.480c9383.chunk.js.map",
     "runtime-main.js": "/cryptocurrency-calculator/static/js/runtime-main.2d020e04.js",
     "runtime-main.js.map": "/cryptocurrency-calculator/static/js/runtime-main.2d020e04.js.map",
-    "static/js/2.83866d99.chunk.js": "/cryptocurrency-calculator/static/js/2.83866d99.chunk.js",
-    "static/js/2.83866d99.chunk.js.map": "/cryptocurrency-calculator/static/js/2.83866d99.chunk.js.map",
+    "static/js/2.f1033e36.chunk.js": "/cryptocurrency-calculator/static/js/2.f1033e36.chunk.js",
+    "static/js/2.f1033e36.chunk.js.map": "/cryptocurrency-calculator/static/js/2.f1033e36.chunk.js.map",
     "index.html": "/cryptocurrency-calculator/index.html",
-    "static/css/main.1091640e.chunk.css.map": "/cryptocurrency-calculator/static/css/main.1091640e.chunk.css.map",
-    "static/js/2.83866d99.chunk.js.LICENSE.txt": "/cryptocurrency-calculator/static/js/2.83866d99.chunk.js.LICENSE.txt"
+    "static/css/main.6032d930.chunk.css.map": "/cryptocurrency-calculator/static/css/main.6032d930.chunk.css.map",
+    "static/js/2.f1033e36.chunk.js.LICENSE.txt": "/cryptocurrency-calculator/static/js/2.f1033e36.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
     "static/js/runtime-main.2d020e04.js",
-    "static/js/2.83866d99.chunk.js",
-    "static/css/main.1091640e.chunk.css",
-    "static/js/main.edbae504.chunk.js"
+    "static/js/2.f1033e36.chunk.js",
+    "static/css/main.6032d930.chunk.css",
+    "static/js/main.480c9383.chunk.js"
   ]
 }
