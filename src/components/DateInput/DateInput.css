@@ -1,0 +1,61 @@
+.wrapper__date-input {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 10px;
+    align-items: flex-start;
+}
+
+.date-input__title {
+    font-size: 15px;
+    margin: 0 0 7px 0;
+}
+
+.date-input__inputs {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.date-input__dd {
+    max-width: 45px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    margin-right: 3px;
+    background-color: #f9f9f9;
+    text-align: center;
+    height: 40px;
+}
+
+.date-input__mm {
+    max-width: 45px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    margin-right: 3px;
+    background-color: #f9f9f9;
+    text-align: center;
+    height: 40px;
+}
+
+.date-input__yyyy {
+    max-width: 80px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    background-color: #f9f9f9;
+    margin-right: 10px;
+    text-align: center;
+    height: 40px;
+}
+
+.date-input__btn {
+    height: 34px;
+    width: 97px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    background-color: #f9f9f9;
+}
+
+.date-input__error {
+    font-size: 13px;
+    color: firebrick;
+    margin-top: 4px;
+}

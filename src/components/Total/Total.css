@@ -1,0 +1,29 @@
+.wrapper__total {
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    width: 300px;
+    margin-top: 10px;
+}
+
+.total__calculate {
+    margin: 0 auto 5px auto;
+}
+
+.total__percent {
+    margin: 0 auto 10px auto;
+}
+
+.btn__reset {
+    outline: none;
+    display: block;
+    width: 70%;
+    border-radius: 3px;
+    border: 1px solid #ccc;
+    padding: 10px;
+    box-sizing: border-box;
+    background-color: #f9f9f9;
+    margin: 0 auto;
+}

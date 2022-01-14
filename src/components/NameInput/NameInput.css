@@ -1,0 +1,22 @@
+.wrapper__name-input {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 10px;
+    align-items: flex-start;
+}
+
+.name-input__title {
+    font-size: 15px;
+    margin: 0 0 7px 0;
+}
+
+.name-input__select {
+    outline: none;
+	display: block;
+	width: 100%;
+	border-radius: 3px;
+	border: 1px solid #ccc;
+	padding: 10px;
+	box-sizing: border-box;
+    background-color: #f9f9f9;
+}

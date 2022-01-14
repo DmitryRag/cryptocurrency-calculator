@@ -1,42 +1,66 @@
 import React, {useState, useEffect} from 'react'
-import NumberFormat from 'react-number-format'
 import axios from 'axios'
-import {today} from '../src/date'
+import {today, currDay, currMonth, currYear} from '../src/date'
+import NameInput from './components/NameInput/NameInput'
+import DateInput from './components/DateInput/DateInput'
+import CurrencyInput from './components/CurrencyInput/CurrencyInput'
+import AmountInput from './components/AmountInput/AmountInput'
+import Total from './components/Total/Total'
 import './App.css'
 
 function App() {
-    const [coinName, setCoinName] = useState('') // название крипты
-    const [dateBuy, setDateBuy] = useState('') // дата покупки
-    const [dateSell, setDateSell] = useState('') // дата продажи
-    const [coinBuyRub, setCoinBuyRub] = useState(0) // цена покупки
+    // название крипты
+    const [coinName, setCoinName] = useState('')
+    // даты покупки
+    const [buyDay, setBuyDay] = useState('')
+    const [buyMonth, setBuyMonth] = useState('')
+    const [buyYear, setBuyYear] = useState('')
+    // даты продажи
+    const [sellDay, setSellDay] = useState('')
+    const [sellMonth, setSellMonth] = useState('')
+    const [sellYear, setSellYear] = useState('')
+    // цены покупки
+    const [coinBuyRub, setCoinBuyRub] = useState(0)
     const [coinBuyUsd, setCoinBuyUsd] = useState(0) 
-    const [coinBuyEur, setCoinBuyEur] = useState(0) 
-    const [coinSellRub, setCoinSellRub] = useState(0) // цена продажи
+    const [coinBuyEur, setCoinBuyEur] = useState(0)
+    // цены продажи 
+    const [coinSellRub, setCoinSellRub] = useState(0) 
     const [coinSellUsd, setCoinSellUsd] = useState(0)
     const [coinSellEur, setCoinSellEur] = useState(0)
-    const [currencyChoice, setCurrencyChoice] = useState('') // выбор валюты
-    const [prefix, setPrefix] = useState('') // эмблемка валюты
-    const [moneyBuy, setMoneyBuy] = useState('') // сумма покупки
-    const [profit, setProfit] = useState(0) // профит денег
-    const [showProfit, setShowProfite] = useState(false) // показать блок подсчета выбранной валюты
-
-    const [coinNameValidity, setCoinNameValidity] = useState(false) // валидность выбора крипты
-    const [dateBuyValidity, setDateBuyValidity] = useState(false) // дата покупки
-    const [dateSellValidity, setDateSellValidity] = useState(false) // дата продажи
+     // выбор валюты
+    const [currencyChoice, setCurrencyChoice] = useState('')
+    // сумма покупки
+    const [moneyBuy, setMoneyBuy] = useState('')
+     // эмблемка валюты
+    const [prefix, setPrefix] = useState('')
+    // профит денег
+    const [profit, setProfit] = useState(0)
+    const [percent, setPercent] = useState(0)
+    // показать блок подсчета выбранной валюты
+    const [showProfit, setShowProfite] = useState(false) 
+    // всплытие ошибок дат
+    const [errBuyFirst, setErrBuyFirst] = useState(false) // валидность от запроса цены покупки
+    const [errBuySecond, setErrBuySecond] = useState(false) // валидность от запроса цены покупки
+    const [errSellFirst, setErrSellFirst] = useState(false) // валидность от запроса цены покупки
+    const [errSellSecond, setErrSellSecond] = useState(false) // валидность от запроса цены покупки
+    // дизейбл инпутов
+    const [dateBuyValidity, setDateBuyValidity] = useState(false)
+    const [dateSellValidity, setDateSellValidity] = useState(false)
     const [currencyChoiceValidity, setCurrencyChoiceValidity] = useState(false)
-    const [moneyBuyValidity, setMoneyBuyValidity] = useState(false) // сумма покупки
+    const [btnCalculateDisabled, setBtnCalculateDisabled] = useState(true)
+    // 
+    const [btnCalculateLabel, setBtnCalculateLabel] = useState('Посчитать')
 
-    const [errBuyFirst, setErrBuyFirst] = useState(true) // валидность от запроса цены покупки
-    const [errBuySecond, setErrBuySecond] = useState(true) // валидность от запроса цены покупки
-    const [errSellFirst, setErrSellFirst] = useState(true) // валидность от запроса цены покупки
-    const [errSellSecond, setErrSellSecond] = useState(true) // валидность от запроса цены покупки
-    const [errorDateBuy, setErrorDateBuy] = useState(0) // такой даты покупки нету в бд
-
-    const disabledButtonTotal = !coinNameValidity || !dateBuyValidity || !dateSellValidity || !moneyBuyValidity // профит кнопка
-
-
+    // переменные
     var cryptocurrency = coinName.toLowerCase().replace( /\s/g, '-')
-
+    var dateBuy = buyDay + '-' + buyMonth + '-' + buyYear
+    var dateSell = sellDay + '-' + sellMonth + '-' + sellYear
+    var amountprice 
+    if (profit <= 10) {
+        amountprice = new Intl.NumberFormat('ru-RU').format(parseFloat(profit).toFixed(2))
+    } else {
+        amountprice = new Intl.NumberFormat('ru-RU').format(parseFloat(profit).toFixed(0))
+    }
     var buyday
     if (coinName === 'bitcoin') {
         buyday = '28-04-2013'
@@ -50,13 +74,7 @@ function App() {
         buyday = '15-12-2013'
     }
 
-    var amountprice
-    if (profit <= 10) {
-        amountprice = new Intl.NumberFormat('ru-RU').format(parseFloat(profit).toFixed(2))
-    } else {
-        amountprice = new Intl.NumberFormat('ru-RU').format(parseFloat(profit).toFixed(0))
-    }
-
+    // запрос цены покупки
     const getBuyPrice = async () => {
         await axios.get(`https://api.coingecko.com/api/v3/coins/${cryptocurrency}/history?date=${dateBuy}`)
         .then(res => {
@@ -65,11 +83,10 @@ function App() {
             setCoinBuyEur(res.data.market_data.current_price.eur)
         })
         .catch(error => {
-            setErrorDateBuy(0.0000001)
-            console.log('ошибка даты покупки')
+            console.log(error, 'ошибка даты покупки')
         })
     }
-
+    // запрос цены продажи
     const getSellPrice = async () => {
         await axios.get(`https://api.coingecko.com/api/v3/coins/${cryptocurrency}/history?date=${dateSell}`)
         .then(res => {
@@ -77,7 +94,7 @@ function App() {
             setCoinSellUsd(res.data.market_data.current_price.usd)
             setCoinSellEur(res.data.market_data.current_price.eur)
         })
-        .catch(error => console.log('ошибка даты продажи'))
+        .catch(error => console.log(error, 'ошибка даты продажи'))
     }
 
     useEffect(() => {
@@ -86,26 +103,25 @@ function App() {
 
     useEffect(() => {
         getSellPrice()
-        if (errorDateBuy > coinBuyRub) {
-            setErrBuySecond(false)
-            setDateBuyValidity(false)
-            setDateSell('')
-        } else {
-            setErrorDateBuy(0)
-        }
-    }, [dateSell])
+    }, [dateSell, coinName])
 
+    // изменение название крипты
     function handleChangeCoinName(e) {
         setCoinName(e.target.value)
-        setCoinNameValidity(e.target.validity.valid)
     }
 
-    function handleChangeDateBuy(e) {
-        setDateBuy(e.target.value)
-        setDateBuyValidity(e.target.validity.valid)
+    // изменение даты покупки
+    function handleChangeBuyDay(e) {
+        setBuyDay(e.target.value)
     }
-    
-    function handleChangeDateSell(e) {
+    function handleChangeBuyMonth(e) {
+        setBuyMonth(e.target.value)
+    }
+    function handleChangeBuyYear(e) {
+        setBuyYear(e.target.value)
+    }
+    // блюр даты покупки
+    function blurDateBuy() {
         var firstValue = dateBuy.split('-')
         var secondValue = buyday.split('-')
         var thirdValue = today.split('-')
@@ -117,58 +133,32 @@ function App() {
         thirdDate.setFullYear(thirdValue[2],(thirdValue[1] - 1 ),thirdValue[0])
         if (firstDate < secondDate)
         {
-            setErrBuyFirst(false)
-            setErrBuySecond(true)
-            setDateBuyValidity(false)
-            setDateSellValidity(e.target.validity.unvalid)
-        } else if (firstDate > thirdDate) {
+            setErrBuyFirst(true)
             setErrBuySecond(false)
-            setErrBuyFirst(true)
             setDateBuyValidity(false)
-            setDateSellValidity(e.target.validity.unvalid)
-        } else {
-            setDateSell(e.target.value)
-            setErrBuyFirst(true)
+        } else if (firstDate > thirdDate) {
             setErrBuySecond(true)
-            setDateSellValidity(e.target.validity.valid)
-
+            setErrBuyFirst(false)
+            setDateBuyValidity(false)
+        } else {
+            setErrBuyFirst(false)
+            setErrBuySecond(false)
+            setDateBuyValidity(true)
         }
     }
 
-    function handleDateSell(e) {
-        e.preventDefault()
-
-        var firstValue = dateBuy.split('-')
-        var secondValue = buyday.split('-')
-        var thirdValue = today.split('-')
-        var firstDate=new Date()
-        var secondDate=new Date()
-        var thirdDate=new Date()
-        firstDate.setFullYear(firstValue[2],(firstValue[1] - 1 ),firstValue[0])
-        secondDate.setFullYear(secondValue[2],(secondValue[1] - 1 ),secondValue[0])
-        thirdDate.setFullYear(thirdValue[2],(thirdValue[1] - 1 ),thirdValue[0])
-        if (firstDate < secondDate)
-        {
-            setErrBuyFirst(false)
-            setErrBuySecond(true)
-            setDateBuyValidity(false)
-            setDateSellValidity(e.target.validity.unvalid)
-        } else if (firstDate > thirdDate) {
-            setErrBuySecond(false)
-            setErrBuyFirst(true)
-            setDateBuyValidity(false)
-            setDateSellValidity(e.target.validity.unvalid)
-        } else {
-            setDateSell(today)
-            setDateSellValidity(e.target.validity.valid)
-            setErrBuyFirst(true)
-            setErrBuySecond(true)
-        }
+    // изменение даты продажи
+    function handleChangeSellDay(e) {
+        setSellDay(e.target.value)
     }
-
-    function handleCurrencyChoice(e) {
-        e.preventDefault()
-
+    function handleChangeSellMonth(e) {
+        setSellMonth(e.target.value)
+    }
+    function handleChangeSellYear(e) {
+        setSellYear(e.target.value)
+    }
+    // блюр даты продажи
+    function blurDateSell() {
         var firstValue = dateBuy.split('-')
         var secondValue = dateSell.split('-')
         var thirdValue = today.split('-')
@@ -180,189 +170,157 @@ function App() {
         thirdDate.setFullYear(thirdValue[2],(thirdValue[1] - 1 ),thirdValue[0])
         if (firstDate >= secondDate)
         {
-            setCurrencyChoice('')
-            setCurrencyChoiceValidity(e.target.validity.unvalid)
-            setDateSellValidity(false)
-            setErrSellFirst(false)
-            setErrSellSecond(true)
-        } else if (secondDate > thirdDate) {
-            setCurrencyChoice('')
-            setCurrencyChoiceValidity(e.target.validity.unvalid)
-            setDateSellValidity(false)
+            setErrSellFirst(true)
             setErrSellSecond(false)
-            setErrSellFirst(true)
-        } else {
-            setCurrencyChoice(e.target.value)
-            setCurrencyChoiceValidity(e.target.validity.valid)
-            setDateSellValidity(true)
-            setErrSellFirst(true)
+            setDateSellValidity(false)
+        } else if (secondDate > thirdDate) {
             setErrSellSecond(true)
+            setErrSellFirst(false)
+            setDateSellValidity(false)
+        } else {
+            setErrSellFirst(false)
+            setErrSellSecond(false)
+            setDateSellValidity(true)
         }
     }
-
+    // кнопка даты продажи сегодня
+    function handleDateSell(e) {
+        e.preventDefault()
+        setSellDay(currDay)
+        setSellMonth(currMonth)
+        setSellYear(currYear)
+        setErrSellFirst(false)
+        setErrSellSecond(false)
+        setDateSellValidity(true)
+    }
+    // изменение валюты покупки
+    function handleCurrencyChoice(e) {
+        e.preventDefault()
+        setCurrencyChoice(e.target.value)
+        setCurrencyChoiceValidity(true)
+    }
+    // изменение суммы покупки
     function handleMoneyBuy(e) {
         setMoneyBuy(e.target.value)
-        setMoneyBuyValidity(e.target.validity.valid)
-        if (currencyChoice === 'usd') {
-            setPrefix('$')
-        } else if (currencyChoice === 'eur') {
-            setPrefix('€')
-        } else {
-            setPrefix('₽')
-        }
+        setBtnCalculateDisabled(false)
     }
-
-    function handleProfit(e) {
+    // подсчет формы
+    function handleCalculate(e) {
         e.preventDefault()
         var money = Number(moneyBuy.replace(/[^0-9]/g,""))
-        if (currencyChoice === 'rub') {
-            setProfit((money / coinBuyRub) * coinSellRub)
-        } else if (currencyChoice === 'usd') {
+        if (currencyChoice === 'usd') {
             setProfit((money / coinBuyUsd) * coinSellUsd)
-        } else {
+            setPercent((coinSellUsd - coinBuyUsd) /  coinBuyUsd * 100)
+            setPrefix('$')
+        } else if (currencyChoice === 'eur') {
             setProfit((money / coinBuyEur) * coinSellEur)
+            setPercent((coinSellEur - coinBuyEur) /  coinBuyEur * 100)
+            setPrefix('€')
+        } else {
+            setProfit((money / coinBuyRub) * coinSellRub)
+            setPercent((coinSellRub - coinBuyRub) /  coinBuyRub * 100)
+            setPrefix('₽')
         }
+        setBtnCalculateLabel('Пересчитать')
         setShowProfite(true)
     }
-
-    function resetForm(e) {
+    // обнуление формы
+    function handleReset(e) {
         e.preventDefault()
-        
+
         setCoinName('')
-        setDateBuy('')
-        setDateSell('')
+        setBuyDay('')
+        setBuyMonth('')
+        setBuyYear('')
+        setSellDay('')
+        setSellMonth('')
+        setSellYear('')
         setCoinBuyRub(0)
         setCoinBuyUsd(0)
         setCoinBuyEur(0)
         setCoinSellRub(0)
         setCoinSellUsd(0)
         setCoinSellEur(0)
-        setMoneyBuy('')
         setCurrencyChoice('')
+        setMoneyBuy('')
+        setPrefix('')
+        setProfit(0)
+        setPercent(0)
         setShowProfite(false)
-        setCoinNameValidity(false)
+        setErrBuyFirst(false)
+        setErrBuySecond(false)
+        setErrSellFirst(false)
+        setErrSellSecond(false)
         setDateBuyValidity(false)
         setDateSellValidity(false)
-        setMoneyBuyValidity(false)
         setCurrencyChoiceValidity(false)
-        setErrorDateBuy(0)
-        setErrBuyFirst(true)
-        setErrBuySecond(true)
-        setErrSellFirst(true)
-        setErrSellSecond(true)
+        setBtnCalculateDisabled(true)
+        setBtnCalculateLabel('Посчитать')
     }
 
     return (
-        <div className='container'>
+        <div className='wrapper'>
             <h1>Crypto Calculator</h1>
-            <form className='calculator__container'>
-                <div className='calculator__field'>
-                    <select
-                        className='cruptocurrency__name'
-                        name='coinname' 
-                        type='text'
-                        placeholder='выберете криптовалюту'
-                        value={coinName}
-                        onChange={handleChangeCoinName}
-                        required
-                    >
-                        <option className='cruptocurrency__name-option' value='' selected disabled hidden>выберете криптовалюту</option>
-                        <option value='bitcoin'>Bitcoin</option>
-                        <option value='ethereum'>Ethereum</option>
-                        <option value='dogecoin'>Dogecoin</option>
-                        <option value='ripple'>Ripple</option>
-                        <option value='tether'>Tether</option>
-                    </select>
-                </div>
-                <div className='calculator__field-date'>
-                    <NumberFormat
-                        className='cruptocurrency__input'
-                        name='buydate'
-                        type='text'
-                        format='##-##-####'
-                        mask={['_', '_', '_', '_', '_', '_', '_', '_']}
-                        placeholder='дата покупки'
-                        autoComplete='off'
-                        value={dateBuy}
-                        disabled={!coinName}
-                        onChange={handleChangeDateBuy}
-                        pattern='(0[1-9]|[12][0-9]|3[01])[- /.](0[1-9]|1[012])[- /.](19|20)\d\d'
-                    />
-                </div>
-                {!errBuyFirst && <span className='error__date-buy'>выберете дату не ранее {buyday}</span>}
-                {!errBuySecond && <span className='error__date-buy'>выберете дату не позднее сегодня {today}</span>}
-                <div className='calculator__field-date'>
-                    <NumberFormat 
-                        className='cruptocurrency__input'
-                        name='selldate'
-                        type='text'
-                        format='##-##-####'
-                        mask={['_', '_', '_', '_', '_', '_', '_', '_']}
-                        placeholder='дата продажи'
-                        autoComplete='off'
-                        value={dateSell}
-                        disabled={!dateBuyValidity}
-                        onChange={handleChangeDateSell}
-                        pattern='(0[1-9]|[12][0-9]|3[01])[- /.](0[1-9]|1[012])[- /.](19|20)\d\d'
-                    />
-                    <button
-                        className={`btn__calculator ${!dateBuyValidity ? 'btn_disabled' : ''}`}
-                        disabled={!dateBuyValidity}
-                        onClick={handleDateSell}
-                    >сегодня</button>
-                </div>
-                {!errSellFirst && <span className='error__date-buy'>дата продажи не может быть меньше или равна дате покупки</span>}
-                {!errSellSecond && <span className='error__date-buy'>дата продажи не может быть больше {today}</span>}
-                <div className='calculator__field'>
-                    <select
-                        className='cruptocurrency__currency-name'
-                        name='currency' 
-                        type='text'
-                        placeholder='выберете валюту покупки'
-                        value={currencyChoice}
-                        disabled={!dateSellValidity}
-                        onChange={handleCurrencyChoice}
-                        required
-                    >
-                        <option className='cruptocurrency__name-option' value='' selected disabled hidden>выберете валюту покупки</option>
-                        <option value='rub'>Рубли</option>
-                        <option value='usd'>Доллары</option>
-                        <option value='eur'>Евро</option>
-                    </select>
-                </div>
-                <div className='calculator__field'>
-                    <NumberFormat
-                        className='cruptocurrency__input'
-                        thousandsGroupStyle="thousand"
-                        decimalSeparator=""
-                        displayType="input"
-                        type="text"
-                        thousandSeparator={true}
-                        prefix={prefix}
-                        allowNegative={true} 
-                        placeholder='сумма покупки'
-                        autoComplete='off'             
-                        value={moneyBuy}
-                        disabled={!currencyChoiceValidity}
-                        onChange={handleMoneyBuy}
-                    />
-                </div>
-                <button
-                    className={`btn__calculator_big ${disabledButtonTotal ? 'btn_disabled' : ''}`}
-                    onClick={handleProfit}
-                    disabled={disabledButtonTotal}
-                >посчитать</button>
-                <button
-                    className={`btn__calculator_big ${!coinName ? 'btn_disabled' : ''}`}
-                    onClick={resetForm}
+            <form className='form'>
+                <NameInput
+                    value={coinName}
+                    onChange={handleChangeCoinName}
+                />
+                <DateInput
+                    valueDay={buyDay}
+                    valueMonth={buyMonth}
+                    valueYear={buyYear}
+                    onChangeDay={handleChangeBuyDay}
+                    onChangeMonth={handleChangeBuyMonth}
+                    onChangeYear={handleChangeBuyYear}
+                    title={'Дата покупки'}
+                    errBuyFirst={errBuyFirst}
+                    errBuyFirstMessage={buyday}
+                    errBuySecond={errBuySecond}
+                    onBlur={blurDateBuy}
                     disabled={!coinName}
-                >обнулить все</button>
-                {showProfit? 
-                    <div className='calculator__container_rub'>
-                        <p className='calculator__total'>Сейчас было бы: {amountprice}{prefix}</p>  
-                    </div>
-                :null}
+                />
+                <DateInput
+                    valueDay={sellDay}
+                    valueMonth={sellMonth}
+                    valueYear={sellYear}
+                    onChangeDay={handleChangeSellDay}
+                    onChangeMonth={handleChangeSellMonth}
+                    onChangeYear={handleChangeSellYear}
+                    showBtnDate={true}
+                    onClick={handleDateSell}
+                    label={'сегодня'}
+                    title={'Дата продажи'}
+                    errSellFirst={errSellFirst}
+                    errSellSecond={errSellSecond}
+                    onBlur={blurDateSell}
+                    disabled={!dateBuyValidity}
+                    disabledBtn={!dateBuyValidity}
+                />
+                <CurrencyInput
+                    value={currencyChoice}
+                    onChange={handleCurrencyChoice}
+                    disabled={!dateSellValidity}
+                />
+                <AmountInput
+                    value={moneyBuy}
+                    onChange={handleMoneyBuy}
+                    disabled={!currencyChoiceValidity}
+                />
+                <button 
+                    className='btn__calculate'
+                    onClick={handleCalculate}
+                    disabled={btnCalculateDisabled}
+                >{btnCalculateLabel}</button>
             </form>
+            {showProfit? 
+                <Total
+                amountprice={amountprice}
+                prefix={prefix}
+                percent={percent}
+                onClick={handleReset}
+                />
+            :null}
         </div>   
     )
 }
