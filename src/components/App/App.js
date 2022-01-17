@@ -1,16 +1,15 @@
 import React, {useState, useEffect} from 'react'
 import axios from 'axios'
-import {today, currDay, currMonth, currYear} from '../src/date'
-import NameInput from './components/NameInput/NameInput'
-import DateInput from './components/DateInput/DateInput'
-import CurrencyInput from './components/CurrencyInput/CurrencyInput'
-import AmountInput from './components/AmountInput/AmountInput'
-import Total from './components/Total/Total'
+import {today, currDay, currMonth, currYear} from '../../date'
+import NameInput from '../NameInput/NameInput'
+import DateInput from '../DateInput/DateInput'
+import CurrencyInput from '../CurrencyInput/CurrencyInput'
+import AmountInput from '../AmountInput/AmountInput'
+import Total from '../Total/Total'
 import './App.css'
 
 function App() {
-    // название крипты
-    const [coinName, setCoinName] = useState('')
+    const [coinName, setCoinName] = useState('') // название крипты
     // даты покупки
     const [buyDay, setBuyDay] = useState('')
     const [buyMonth, setBuyMonth] = useState('')
@@ -19,25 +18,22 @@ function App() {
     const [sellDay, setSellDay] = useState('')
     const [sellMonth, setSellMonth] = useState('')
     const [sellYear, setSellYear] = useState('')
-    // цены покупки
-    const [coinBuyRub, setCoinBuyRub] = useState(0)
-    const [coinBuyUsd, setCoinBuyUsd] = useState(0) 
-    const [coinBuyEur, setCoinBuyEur] = useState(0)
-    // цены продажи 
-    const [coinSellRub, setCoinSellRub] = useState(0) 
-    const [coinSellUsd, setCoinSellUsd] = useState(0)
-    const [coinSellEur, setCoinSellEur] = useState(0)
-     // выбор валюты
-    const [currencyChoice, setCurrencyChoice] = useState('')
-    // сумма покупки
-    const [moneyBuy, setMoneyBuy] = useState('')
-     // эмблемка валюты
-    const [prefix, setPrefix] = useState('')
-    // профит денег
-    const [profit, setProfit] = useState(0)
+    const [buyPrice, setBuyPrice] = useState({
+        rub: 0,
+        usd: 0,
+        eur: 0
+    }) // цена покупки
+    const [sellPrice, setSellPrice] = useState({
+        rub: 0,
+        usd: 0,
+        eur: 0
+    }) // цена продажи 
+    const [currencyChoice, setCurrencyChoice] = useState('') // выбор валюты
+    const [moneyBuy, setMoneyBuy] = useState('') // сумма покупки
+    const [prefix, setPrefix] = useState('') // эмблемка валюты
+    const [profit, setProfit] = useState(0) // профит денег
     const [percent, setPercent] = useState(0)
-    // показать блок подсчета выбранной валюты
-    const [showProfit, setShowProfite] = useState(false) 
+    const [showProfit, setShowProfite] = useState(false) // показать блок итога 
     // всплытие ошибок дат
     const [errBuyFirst, setErrBuyFirst] = useState(false) // валидность от запроса цены покупки
     const [errBuySecond, setErrBuySecond] = useState(false) // валидность от запроса цены покупки
@@ -51,7 +47,6 @@ function App() {
     // 
     const [btnCalculateLabel, setBtnCalculateLabel] = useState('Посчитать')
 
-    // переменные
     var cryptocurrency = coinName.toLowerCase().replace( /\s/g, '-')
     var dateBuy = buyDay + '-' + buyMonth + '-' + buyYear
     var dateSell = sellDay + '-' + sellMonth + '-' + sellYear
@@ -74,28 +69,31 @@ function App() {
         buyday = '15-12-2013'
     }
 
-    // запрос цены покупки
     const getBuyPrice = async () => {
         await axios.get(`https://api.coingecko.com/api/v3/coins/${cryptocurrency}/history?date=${dateBuy}`)
         .then(res => {
-            setCoinBuyRub(res.data.market_data.current_price.rub)
-            setCoinBuyUsd(res.data.market_data.current_price.usd)
-            setCoinBuyEur(res.data.market_data.current_price.eur)
+            setBuyPrice({
+                ...setBuyPrice, rub: res.data.market_data.current_price.rub,
+                ...setBuyPrice, usd: res.data.market_data.current_price.usd,
+                ...setBuyPrice, eur: res.data.market_data.current_price.eur
+            })
         })
         .catch(error => {
             console.log(error, 'ошибка даты покупки')
         })
-    }
-    // запрос цены продажи
+    } // запрос цены покупки
+
     const getSellPrice = async () => {
         await axios.get(`https://api.coingecko.com/api/v3/coins/${cryptocurrency}/history?date=${dateSell}`)
         .then(res => {
-            setCoinSellRub(res.data.market_data.current_price.rub)
-            setCoinSellUsd(res.data.market_data.current_price.usd)
-            setCoinSellEur(res.data.market_data.current_price.eur)
+            setSellPrice({
+                ...setSellPrice, rub: res.data.market_data.current_price.rub,
+                ...setSellPrice, usd: res.data.market_data.current_price.usd,
+                ...setSellPrice, eur: res.data.market_data.current_price.eur
+            })
         })
         .catch(error => console.log(error, 'ошибка даты продажи'))
-    }
+    } // запрос цены продажи
 
     useEffect(() => {
         getBuyPrice()
@@ -105,10 +103,9 @@ function App() {
         getSellPrice()
     }, [dateSell, coinName])
 
-    // изменение название крипты
     function handleChangeCoinName(e) {
         setCoinName(e.target.value)
-    }
+    } // изменение название крипты
 
     // изменение даты покупки
     function handleChangeBuyDay(e) {
@@ -120,7 +117,7 @@ function App() {
     function handleChangeBuyYear(e) {
         setBuyYear(e.target.value)
     }
-    // блюр даты покупки
+    
     function blurDateBuy() {
         var firstValue = dateBuy.split('-')
         var secondValue = buyday.split('-')
@@ -145,7 +142,7 @@ function App() {
             setErrBuySecond(false)
             setDateBuyValidity(true)
         }
-    }
+    } // блюр даты покупки
 
     // изменение даты продажи
     function handleChangeSellDay(e) {
@@ -157,7 +154,7 @@ function App() {
     function handleChangeSellYear(e) {
         setSellYear(e.target.value)
     }
-    // блюр даты продажи
+    
     function blurDateSell() {
         var firstValue = dateBuy.split('-')
         var secondValue = dateSell.split('-')
@@ -182,8 +179,8 @@ function App() {
             setErrSellSecond(false)
             setDateSellValidity(true)
         }
-    }
-    // кнопка даты продажи сегодня
+    } // блюр даты продажи
+    
     function handleDateSell(e) {
         e.preventDefault()
         setSellDay(currDay)
@@ -192,39 +189,39 @@ function App() {
         setErrSellFirst(false)
         setErrSellSecond(false)
         setDateSellValidity(true)
-    }
-    // изменение валюты покупки
+    } // кнопка даты продажи сегодня
+    
     function handleCurrencyChoice(e) {
         e.preventDefault()
         setCurrencyChoice(e.target.value)
         setCurrencyChoiceValidity(true)
-    }
-    // изменение суммы покупки
+    } // изменение валюты покупки
+    
     function handleMoneyBuy(e) {
         setMoneyBuy(e.target.value)
         setBtnCalculateDisabled(false)
-    }
-    // подсчет формы
+    } // изменение суммы покупки
+    
     function handleCalculate(e) {
         e.preventDefault()
         var money = Number(moneyBuy.replace(/[^0-9]/g,""))
         if (currencyChoice === 'usd') {
-            setProfit((money / coinBuyUsd) * coinSellUsd)
-            setPercent((coinSellUsd - coinBuyUsd) /  coinBuyUsd * 100)
+            setProfit((money / buyPrice.usd) * sellPrice.usd)
+            setPercent((sellPrice.usd - buyPrice.usd) /  buyPrice.usd * 100)
             setPrefix('$')
         } else if (currencyChoice === 'eur') {
-            setProfit((money / coinBuyEur) * coinSellEur)
-            setPercent((coinSellEur - coinBuyEur) /  coinBuyEur * 100)
+            setProfit((money / buyPrice.eur) * sellPrice.eur)
+            setPercent((sellPrice.eur - buyPrice.eur) /  buyPrice.eur * 100)
             setPrefix('€')
         } else {
-            setProfit((money / coinBuyRub) * coinSellRub)
-            setPercent((coinSellRub - coinBuyRub) /  coinBuyRub * 100)
+            setProfit((money / buyPrice.rub) * sellPrice.rub)
+            setPercent((sellPrice.rub - buyPrice.rub) /  buyPrice.rub * 100)
             setPrefix('₽')
         }
         setBtnCalculateLabel('Пересчитать')
         setShowProfite(true)
-    }
-    // обнуление формы
+    } // подсчет формы
+
     function handleReset(e) {
         e.preventDefault()
 
@@ -235,12 +232,16 @@ function App() {
         setSellDay('')
         setSellMonth('')
         setSellYear('')
-        setCoinBuyRub(0)
-        setCoinBuyUsd(0)
-        setCoinBuyEur(0)
-        setCoinSellRub(0)
-        setCoinSellUsd(0)
-        setCoinSellEur(0)
+        setBuyPrice({
+            ...setBuyPrice, buyRub: 0,
+            ...setBuyPrice, buyUsd: 0,
+            ...setBuyPrice, buyEur: 0
+        })
+        setSellPrice({
+            ...setSellPrice, sellRub: 0,
+            ...setSellPrice, sellUsd: 0,
+            ...setSellPrice, sellEur: 0
+        })
         setCurrencyChoice('')
         setMoneyBuy('')
         setPrefix('')
@@ -256,7 +257,7 @@ function App() {
         setCurrencyChoiceValidity(false)
         setBtnCalculateDisabled(true)
         setBtnCalculateLabel('Посчитать')
-    }
+    } // обнуление формы
 
     return (
         <div className='wrapper'>
