@@ -1,20 +1,21 @@
 {
   "files": {
-    "main.css": "/cryptocurrency-calculator/static/css/main.397f2e87.chunk.css",
-    "main.js": "/cryptocurrency-calculator/static/js/main.1d21be58.chunk.js",
-    "main.js.map": "/cryptocurrency-calculator/static/js/main.1d21be58.chunk.js.map",
+    "main.css": "/cryptocurrency-calculator/static/css/main.bf899bf5.chunk.css",
+    "main.js": "/cryptocurrency-calculator/static/js/main.80da2a28.chunk.js",
+    "main.js.map": "/cryptocurrency-calculator/static/js/main.80da2a28.chunk.js.map",
     "runtime-main.js": "/cryptocurrency-calculator/static/js/runtime-main.2d020e04.js",
     "runtime-main.js.map": "/cryptocurrency-calculator/static/js/runtime-main.2d020e04.js.map",
-    "static/js/2.9a024a15.chunk.js": "/cryptocurrency-calculator/static/js/2.9a024a15.chunk.js",
-    "static/js/2.9a024a15.chunk.js.map": "/cryptocurrency-calculator/static/js/2.9a024a15.chunk.js.map",
+    "static/js/2.b541e869.chunk.js": "/cryptocurrency-calculator/static/js/2.b541e869.chunk.js",
+    "static/js/2.b541e869.chunk.js.map": "/cryptocurrency-calculator/static/js/2.b541e869.chunk.js.map",
     "index.html": "/cryptocurrency-calculator/index.html",
-    "static/css/main.397f2e87.chunk.css.map": "/cryptocurrency-calculator/static/css/main.397f2e87.chunk.css.map",
-    "static/js/2.9a024a15.chunk.js.LICENSE.txt": "/cryptocurrency-calculator/static/js/2.9a024a15.chunk.js.LICENSE.txt"
+    "static/css/main.bf899bf5.chunk.css.map": "/cryptocurrency-calculator/static/css/main.bf899bf5.chunk.css.map",
+    "static/js/2.b541e869.chunk.js.LICENSE.txt": "/cryptocurrency-calculator/static/js/2.b541e869.chunk.js.LICENSE.txt",
+    "static/media/index.css": "/cryptocurrency-calculator/static/media/arial_black.70134b2b.ttf"
   },
   "entrypoints": [
     "static/js/runtime-main.2d020e04.js",
-    "static/js/2.9a024a15.chunk.js",
-    "static/css/main.397f2e87.chunk.css",
-    "static/js/main.1d21be58.chunk.js"
+    "static/js/2.b541e869.chunk.js",
+    "static/css/main.bf899bf5.chunk.css",
+    "static/js/main.80da2a28.chunk.js"
   ]
 }
