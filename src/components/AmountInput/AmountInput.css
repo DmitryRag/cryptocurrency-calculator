@@ -1,4 +1,4 @@
-.wrapper__amount-input {
+.amount-input {
     display: flex;
     flex-direction: column;
     margin-bottom: 10px;
@@ -6,17 +6,39 @@
 }
 
 .amount-input__title {
-    font-size: 15px;
-    margin: 0 0 7px 0;
+    margin: 0 0 5px 0;
+    font-size: 22px;
+    text-align: left;
+}
+
+.amount-input_wrapper {
+    display: flex;
+    flex-direction: row;
+    border: 1px solid black;
+    background-color: #fff;
+    align-items: center;
+    padding-left: 7.5px;
+    max-width: 125px;
+}
+
+.amount-input__prefix {
+    margin: 0;
+    width: 9px;
+    font-size: 14px;
 }
 
 .amount-input__input {
+    -moz-appearance: none;
+    -webkit-appearance: none;
+    appearance: none;
+    margin: 0;
     outline: none;
 	display: block;
 	width: 100%;
 	border-radius: 3px;
-	border: 1px solid #ccc;
+	border: none;
 	padding: 10px;
 	box-sizing: border-box;
-    background-color: #f9f9f9;
+    background-color: white;
+    padding: 5px 25px 5px 5px;
 }

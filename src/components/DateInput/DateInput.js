@@ -2,6 +2,7 @@ import React from 'react'
 import {today} from '../../date'
 import './DateInput.css'
 
+
 export default function DateInput({valueDay, valueMonth, valueYear, onChangeDay, onChangeMonth, onChangeYear, onClick, label, title, showBtnDate, errBuyFirst, errBuyFirstMessage, errBuySecond, errSellFirst, errSellSecond, onBlur, disabled, disabledBtn}) {
 
     return (
@@ -15,6 +16,7 @@ export default function DateInput({valueDay, valueMonth, valueYear, onChangeDay,
                     onChange={onChangeDay}
                     maxLength={2}
                     disabled={disabled}
+                    type='number'
                 />
                 <input
                     className='date-input__mm'
@@ -23,6 +25,7 @@ export default function DateInput({valueDay, valueMonth, valueYear, onChangeDay,
                     onChange={onChangeMonth}
                     maxLength={2}
                     disabled={disabled}
+                    type='number'
                 />
                 <input 
                     className='date-input__yyyy'
@@ -32,6 +35,7 @@ export default function DateInput({valueDay, valueMonth, valueYear, onChangeDay,
                     maxLength={4}
                     onBlur={onBlur}
                     disabled={disabled}
+                    type='number'
                 />
                 {showBtnDate?
                 <button 

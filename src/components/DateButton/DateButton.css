@@ -1,0 +1,17 @@
+.date-button__button {
+    background: black;
+    color: white;
+    border: 1px solid black;
+    font-family: -apple-system, 'Helvetica Neue', 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+    padding: 5px 5px 5px 5px;
+    height: 27px;
+    font-size: 15px;
+    line-height: 0;
+    cursor: pointer;
+    outline: none;
+}
+
+.date-button__button:hover {
+    background: white;
+    color: black;
+}

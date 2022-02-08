@@ -1,0 +1,11 @@
+.сurrency-block {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 17px;
+}
+
+.сurrency-block__title {
+    margin: 0 0 5px 0;
+    font-size: 22px;
+    text-align: left;
+}
