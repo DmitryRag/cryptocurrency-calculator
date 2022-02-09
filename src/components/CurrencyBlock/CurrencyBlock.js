@@ -2,7 +2,7 @@ import React from 'react'
 import CurrencySelect from '../CurrencySelect/CurrencySelect'
 import './CurrencyBlock.css'
 
-function CurrencyBlock({value, onChange}) {
+function CurrencyBlock({ value, onChange, disabled }) {
 
     return (
         <div className='сurrency-block'>
@@ -10,6 +10,7 @@ function CurrencyBlock({value, onChange}) {
             <CurrencySelect 
                 value={value}
                 onChange={onChange}
+                disabled={disabled}
             />
         </div>
     )

@@ -16,3 +16,9 @@
 	background: white;
     color: black;
 }
+
+.form-button__button:disabled {
+    background: white;
+    color: gray;
+    opacity: 0.5;
+}

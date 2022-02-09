@@ -1,7 +1,7 @@
 import React from 'react'
 import './YearSelect.css'
 
-function YearSelect({value, onChange}) {
+function YearSelect({value, onChange, disabled}) {
 
     return (
         <div className='year-select'>
@@ -12,8 +12,9 @@ function YearSelect({value, onChange}) {
                     placeholder='выберете месяц'
                     value={value}
                     onChange={onChange}
+                    disabled={disabled}
                 >
-                    <option className='year-select__option' value='' selected disabled hidden>year</option>
+                    <option className='year-select__option' value='' selected disabled hidden>год</option>
                     <option value='2022'>2022</option>
                     <option value='2021'>2021</option>
                     <option value='2020'>2020</option>

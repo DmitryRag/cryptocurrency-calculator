@@ -15,16 +15,16 @@ function App() {
         rub: 0,
         usd: 0,
         eur: 0
-    }) // цена покупки
+    })
     const [sellPrice, setSellPrice] = useState({
         rub: 0,
         usd: 0,
         eur: 0
-    }) // цена продажи 
+    })
     const [coins, setCoins] = useState('')
-    const [profit, setProfit] = useState(0) // профит денег
+    const [profit, setProfit] = useState(0)
     const [percent, setPercent] = useState(0)
-    const [showProfit, setShowProfite] = useState(false) // показать блок итога 
+    const [showProfit, setShowProfite] = useState(false)
     const [btnCalculateLabel, setBtnCalculateLabel] = useState('Посчитать')
     const coinName = useInput('')
     const moneyBuy = useInput('')
@@ -51,12 +51,12 @@ function App() {
     const arrayDaysBuy = getDayArray(daysBuy)
     const arrayDaysSell = getDayArray(daysSell)
     const prefix = currencyChoise(currency.value)
-
     const [errBuyFirst, setErrBuyFirst] = useState(false)
     const [errBuySecond, setErrBuySecond] = useState(false)
     const [errSellFirst, setErrSellFirst] = useState(false)
     const [errSellSecond, setErrSellSecond] = useState(false)
-    const [errSellThird, setErrSellThird] = useState(false)
+    const [dateBuyValidity, setDateBuyValidity] = useState(false)
+    const [dateSellValidity, setDateSellValidity] = useState(false)
 
     const getBuyPrice = async () => {
         await axios.get(`https://api.coingecko.com/api/v3/coins/${cryptocurrency}/history?date=${dateBuy}`)
@@ -106,15 +106,15 @@ function App() {
         {
             setErrBuyFirst(true)
             setErrBuySecond(false)
-            /* setDateBuyValidity(false) */
+            setDateBuyValidity(false)
         } else if (firstDate > thirdDate) {
             setErrBuySecond(true)
             setErrBuyFirst(false)
-            /* setDateBuyValidity(false) */
+            setDateBuyValidity(false)
         } else {
             setErrBuyFirst(false)
             setErrBuySecond(false)
-            /* setDateBuyValidity(true) */
+            setDateBuyValidity(true)
         }
     } 
 
@@ -132,20 +132,15 @@ function App() {
         {
             setErrSellFirst(true)
             setErrSellSecond(false)
-            /* setDateSellValidity(false) */
+            setDateSellValidity(false)
         } else if (secondDate > thirdDate) {
             setErrSellSecond(true)
             setErrSellFirst(false)
-            /* setSellPrice({
-                ...setSellPrice, rub: 0,
-                ...setSellPrice, usd: 0,
-                ...setSellPrice, eur: 0
-            }) */
-            /* setDateSellValidity(false) */
+            setDateSellValidity(false)
         } else {
             setErrSellFirst(false)
             setErrSellSecond(false)
-            /* setDateSellValidity(true) */
+            setDateSellValidity(true)
         }
     } // блюр даты продажи
 
@@ -155,6 +150,7 @@ function App() {
         daySell.todayDate(currDay)
         monthSell.todayDate(currMonth)
         yearSell.todayDate(currYear)
+        setDateSellValidity(true)
     } // кнопка даты продажи сегодня
     
     function handleCalculate(e) {
@@ -203,6 +199,8 @@ function App() {
         setPercent(0)
         setShowProfite(false)
         setBtnCalculateLabel('Посчитать')
+        setDateBuyValidity(false)
+        setDateSellValidity(false)
     } // обнуление формы
 
     return (
@@ -227,6 +225,7 @@ function App() {
                     onBlur={blurDateBuy}
                     today={today}
                     errorBuyDay={errorBuyDay}
+                    disabled={!coinName.value}
                 />
                 <DateBlock 
                     label={'Дата продажи'}
@@ -243,19 +242,23 @@ function App() {
                     errSellSecond={errSellSecond}
                     onBlur={blurDateSell}
                     today={today}
+                    disabled={!dateBuyValidity}
                 />
                 <CurrencyBlock
                     value={currency.value}
                     onChange={currency.onChange}
+                    disabled={!dateSellValidity}
                 />
                 <AmountInput
                     value={moneyBuy.value}
                     onChange={moneyBuy.onChange}
                     prefix={prefix}
+                    disabled={!prefix}
                 />
                 <FormButton 
                     onClick={handleCalculate}
                     buttonLabel={btnCalculateLabel}
+                    disabled={!moneyBuy.value}
                 />
             </form>
             {showProfit? 

@@ -15,3 +15,9 @@
     background: white;
     color: black;
 }
+
+.date-button__button:disabled {
+    background: white;
+    color: gray;
+    opacity: 0.5;
+}

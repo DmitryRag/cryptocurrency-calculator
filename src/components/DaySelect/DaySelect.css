@@ -31,5 +31,8 @@
     background-color: #fff;
     padding: 5px 25px 5px 7.5px;
     outline: none;
-    width: 100%;
+}
+
+.day-select__select:disabled {
+    opacity: 0.5;
 }

@@ -5,7 +5,7 @@ import DaySelect from '../DaySelect/DaySelect'
 import DateButton from '../DateButton/DateButton'
 import './DateBlock.css'
 
-function DateBlock({ valueYear, onChangeYear, valueMonth, onChangeMonth, valueDay, onChangeDay, onClick, label, showBtn, daysArray, errBuyFirst, errBuySecond, errSellFirst, errSellSecond, onBlur, today, errorBuyDay }) {
+function DateBlock({ valueYear, onChangeYear, valueMonth, onChangeMonth, valueDay, onChangeDay, onClick, label, showBtn, daysArray, errBuyFirst, errBuySecond, errSellFirst, errSellSecond, onBlur, today, errorBuyDay, disabled }) {
 
     return (
         <div className='date-block'>
@@ -21,19 +21,23 @@ function DateBlock({ valueYear, onChangeYear, valueMonth, onChangeMonth, valueDa
                 <YearSelect
                     value={valueYear}
                     onChange={onChangeYear}
+                    disabled={disabled}
                 />
                 <MonthSelect
                     value={valueMonth}
                     onChange={onChangeMonth}
+                    disabled={disabled}
                 />
                 <DaySelect
                     value={valueDay}
                     onChange={onChangeDay}
                     daysArray={daysArray}
+                    disabled={disabled}
                 />
                 {showBtn ?
                     <DateButton
                         onClick={onClick}
+                        disabled={disabled}
                     />
                     : null}
             </div>

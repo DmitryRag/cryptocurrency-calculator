@@ -1,7 +1,7 @@
 import React from 'react'
 import './DaySelect.css'
 
-function DaySelect({ value, onChange, daysArray }) {
+function DaySelect({ value, onChange, daysArray, disabled }) {
 
     return (
         <div className='day-select'>
@@ -11,10 +11,9 @@ function DaySelect({ value, onChange, daysArray }) {
                     type='text'
                     value={value}
                     onChange={onChange}
+                    disabled={disabled}
                 >
-                    <option className='day-select__option' value='' selected disabled hidden>
-                        day
-                    </option>
+                    <option className='day-select__option' value='' selected disabled hidden>день</option>
                     {daysArray.map(daysArray => <option value={daysArray}>{daysArray}</option>)}
                 </select>
             </div>

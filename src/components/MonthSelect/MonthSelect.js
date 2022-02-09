@@ -1,7 +1,7 @@
 import React from 'react'
 import './MonthSelect.css'
 
-function MonthSelect({value, onChange}) {
+function MonthSelect({value, onChange, disabled}) {
 
     return (
         <div className='month-select'>
@@ -11,8 +11,9 @@ function MonthSelect({value, onChange}) {
                     type='text'
                     value={value}
                     onChange={onChange}
+                    disabled={disabled}
                 >
-                    <option className='month-select__option' value='' selected disabled hidden>month</option>
+                    <option className='month-select__option' value='' selected disabled hidden>месяц</option>
                     <option value='01'>Январь</option>
                     <option value='02'>Февраль</option>
                     <option value='03'>Март</option>

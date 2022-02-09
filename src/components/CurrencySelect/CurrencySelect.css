@@ -33,3 +33,7 @@
     outline: none;
     width: 100%;
 }
+
+.currency-select__select:disabled {
+    opacity: 0.5;
+}
