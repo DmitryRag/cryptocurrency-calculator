@@ -1,21 +1,21 @@
 {
   "files": {
-    "main.css": "/cryptocurrency-calculator/static/css/main.479f90c3.chunk.css",
-    "main.js": "/cryptocurrency-calculator/static/js/main.ddccb7fc.chunk.js",
-    "main.js.map": "/cryptocurrency-calculator/static/js/main.ddccb7fc.chunk.js.map",
+    "main.css": "/cryptocurrency-calculator/static/css/main.69370dab.chunk.css",
+    "main.js": "/cryptocurrency-calculator/static/js/main.773ca2ce.chunk.js",
+    "main.js.map": "/cryptocurrency-calculator/static/js/main.773ca2ce.chunk.js.map",
     "runtime-main.js": "/cryptocurrency-calculator/static/js/runtime-main.2d020e04.js",
     "runtime-main.js.map": "/cryptocurrency-calculator/static/js/runtime-main.2d020e04.js.map",
-    "static/js/2.b541e869.chunk.js": "/cryptocurrency-calculator/static/js/2.b541e869.chunk.js",
-    "static/js/2.b541e869.chunk.js.map": "/cryptocurrency-calculator/static/js/2.b541e869.chunk.js.map",
+    "static/js/2.aa16c345.chunk.js": "/cryptocurrency-calculator/static/js/2.aa16c345.chunk.js",
+    "static/js/2.aa16c345.chunk.js.map": "/cryptocurrency-calculator/static/js/2.aa16c345.chunk.js.map",
     "index.html": "/cryptocurrency-calculator/index.html",
-    "static/css/main.479f90c3.chunk.css.map": "/cryptocurrency-calculator/static/css/main.479f90c3.chunk.css.map",
-    "static/js/2.b541e869.chunk.js.LICENSE.txt": "/cryptocurrency-calculator/static/js/2.b541e869.chunk.js.LICENSE.txt",
+    "static/css/main.69370dab.chunk.css.map": "/cryptocurrency-calculator/static/css/main.69370dab.chunk.css.map",
+    "static/js/2.aa16c345.chunk.js.LICENSE.txt": "/cryptocurrency-calculator/static/js/2.aa16c345.chunk.js.LICENSE.txt",
     "static/media/index.css": "/cryptocurrency-calculator/static/media/arial_black.70134b2b.ttf"
   },
   "entrypoints": [
     "static/js/runtime-main.2d020e04.js",
-    "static/js/2.b541e869.chunk.js",
-    "static/css/main.479f90c3.chunk.css",
-    "static/js/main.ddccb7fc.chunk.js"
+    "static/js/2.aa16c345.chunk.js",
+    "static/css/main.69370dab.chunk.css",
+    "static/js/main.773ca2ce.chunk.js"
   ]
 }
