@@ -261,7 +261,7 @@ function App() {
                     disabled={!moneyBuy.value}
                 />
             </form>
-            {showProfit? 
+            {showProfit ? 
                 <Total
                     amountprice={amountprice}
                     coins={coins}
